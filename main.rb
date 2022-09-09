@@ -31,9 +31,21 @@ class Tree
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
+
+  def insert(value,  root = @array[@array.length / 2])
+    new_elm = Node.new(value)
+    if root == nil
+      root = new_elm.data
+    else
+      if root > new_elm.data 
+        insert(value, root.left)
+      end
+    end
+  end
 end
 
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 t = Tree.new(array)
 puts t.pretty_print
+puts t.insert(5)
