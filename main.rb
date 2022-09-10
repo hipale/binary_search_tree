@@ -47,6 +47,18 @@ class Tree
       insert(value, node.right, mid + 1, ends)
     end
   end
+
+  def find(value, node = @root, starts = 0, ends = @array.length - 1)
+    mid = starts + (ends - starts) / 2
+    if value == @array[mid]
+      return node
+    end
+     if value > @array[mid]
+      find(value, node.right, mid + 1, ends)
+     elsif value < @array[mid]
+      find(value, node.left, starts, mid - 1)
+     end
+  end
 end
 
 
@@ -59,3 +71,5 @@ puts t.pretty_print
  t.insert(2)
 
 puts t.pretty_print
+
+pp t.find(67)
