@@ -32,14 +32,19 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
-  def insert(value,  root = @array[@array.length / 2])
-    new_elm = Node.new(value)
-    if root == nil
-      root = new_elm.data
-    else
-      if root > new_elm.data 
-        insert(value, root.left)
-      end
+  def insert(value, node = @root, starts = 0, ends = @array.length - 1)
+    mid = starts + (ends - starts) / 2
+    if node.right == nil && value > node.data
+      node.right = Node.new(value)
+      return
+    elsif node.left == nil && value < node.data
+      node.left = Node.new(value)
+      return
+    end
+    if @array[mid] > value
+      insert(value, node.left, starts, mid - 1)
+    elsif @array[mid] < value
+      insert(value, node.right, mid + 1, ends)
     end
   end
 end
@@ -48,4 +53,9 @@ end
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 t = Tree.new(array)
 puts t.pretty_print
-puts t.insert(5)
+ t.insert(9999)
+ t.insert(555)
+ t.insert(8)
+ t.insert(2)
+
+puts t.pretty_print
