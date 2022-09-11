@@ -34,11 +34,9 @@ class Tree
 
   def insert(value, node = @root)
     if node.right == nil && value > node.data
-      node.right = Node.new(value)
-      return
+      return node.right = Node.new(value)
     elsif node.left == nil && value < node.data
-      node.left = Node.new(value)
-      return
+      return node.left = Node.new(value)
     end
     if value < node.data 
       insert(value, node.left) 
@@ -52,12 +50,22 @@ class Tree
       return false
     end
     if node.right.data == value
-      node.right = nil
-      return
+      current = node.right
     elsif node.left.data == value
-      node.left = nil
+      current = node.left
+    end
+    if current.right != nil && current.left != nil
+      change = current.right
+      until change.left == nil
+        change = change.left
+      end
+      current.data = change.data
+      current.right = current.right.right
+      change = nil
       return 
     end
+      current.right != nil ? change = current.right : change = current.left
+      return current = change
     value < node.data ? delete(value, node.left) : delete(value, node.right)
   end
 
@@ -84,6 +92,6 @@ t = Tree.new(array)
 
 puts t.pretty_print
 
-t.delete(6345)
+t.delete(9)
 puts t.pretty_print
 #pp t.find(6345)
