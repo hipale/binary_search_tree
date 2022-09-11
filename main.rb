@@ -46,24 +46,33 @@ class Tree
   end
 
   def delete(value, node = @root)
-    if node == nil 
-      return false
+    node == nil ? false : current = nil
+   
+    if node.right != nil
+      current = node.right
+    elsif node.left != nil
+      current = node.left
     end
-    if node.data == value
-      if node.right == nil && node.left == nil
-        node = nil
-        
-        return node = node
-      elsif node.right != nil && node.left != nil
-        change = node.right
+
+    if current.data == value
+      if current.right != nil && current.left != nil
+        change = current.right
         until change.left == nil
           change = change.left
         end
-        node.data = change.data
-        node.right = node.right.right
+        current.data = change.data
+        current.right = current.right.right
         return change = nil   
+      elsif current.right == nil && current.left == nil
+        if current == node.right
+          node.right = nil
+        else 
+          node.left = nil
+        end
       end
+      return
     end
+
     value < node.data ? delete(value, node.left) : delete(value, node.right)
   end
 
