@@ -45,36 +45,6 @@ class Tree
     end
   end
 
-  def delete(value, node = @root)
-    node == nil ? false : current = nil
-   
-    if node.right != nil
-      current = node.right
-    elsif node.left != nil
-      current = node.left
-    end
-
-    if current.data == value
-      if current.right != nil && current.left != nil
-        change = current.right
-        until change.left == nil
-          change = change.left
-        end
-        current.data = change.data
-        current.right = current.right.right
-        return change = nil   
-      elsif current.right == nil && current.left == nil
-        if current == node.right
-          node.right = nil
-        else 
-          node.left = nil
-        end
-      end
-      return
-    end
-
-    value < node.data ? delete(value, node.left) : delete(value, node.right)
-  end
 
   def find(value, node = @root)
     if node == nil
@@ -85,7 +55,29 @@ class Tree
     end
     value < node.data ? find(value, node.left) : find(value, node.right)
   end
+  
+  def level_order_iteration(node = @root)
+    if node == nil 
+      return 
+    end
+    queue = [node]
+    while queue.length > 0
+      current = queue[0]
+      if current.left != nil
+        queue.push(current.left)
+      end
+      if current.right != nil
+        queue.push(current.right)
+      end
+      puts queue[0].data
+      queue.shift
+    end
+  end
+
+
 end
+
+
 
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
@@ -95,9 +87,8 @@ t = Tree.new(array)
  #t.insert(9999)
  #t.insert(555)
  #t.insert(8)
- #t.insert(2)
+ t.insert(2)
 
 puts t.pretty_print
-t.delete(6345)
-puts t.pretty_print
+puts t.level_order_iteration
 #pp t.find(6345)
