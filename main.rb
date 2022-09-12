@@ -55,7 +55,7 @@ class Tree
     end
     value < node.data ? find(value, node.left) : find(value, node.right)
   end
-  
+
   def level_order_iteration(node = @root)
     if node == nil 
       return 
@@ -74,7 +74,20 @@ class Tree
     end
   end
 
-
+  def level_order_recursion(node = @root, queue = [node])
+    if node == nil 
+      return 
+    end
+    if node.left != nil
+      queue.push(node.left)
+    end
+    if node.right != nil
+      queue.push(node.right)
+    end
+    puts queue[0].data
+    queue.shift
+    level_order_recursion(queue[0], queue)
+  end
 end
 
 
@@ -90,5 +103,5 @@ t = Tree.new(array)
  t.insert(2)
 
 puts t.pretty_print
-puts t.level_order_iteration
+puts t.level_order_recursion
 #pp t.find(6345)
