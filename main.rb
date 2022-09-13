@@ -88,6 +88,37 @@ class Tree
     queue.shift
     level_order_recursion(queue[0], queue)
   end
+
+  def height(value, count = 0, node = @root)
+    if node == nil
+      return 
+    end
+    if node.data == value
+      return count
+      count = 0
+    end
+    if node.left != nil
+      height(value, count + 1, node.left)
+    end
+    if node.right != nil
+     height(value, count + 1, node.right)
+    end
+  end
+
+  def depth(value, count = 0, node = @root)
+    if node == nil
+      return 
+    end
+    if node.data == value
+      return count
+    end
+    if node.left != nil
+      height(value, count + 1, node.left)
+    end
+    if node.right != nil
+     height(value, count + 1, node.right)
+    end
+  end
 end
 
 
@@ -103,5 +134,6 @@ t = Tree.new(array)
  t.insert(2)
 
 puts t.pretty_print
-puts t.level_order_recursion
+#puts t.level_order_recursion
+puts t.height(67)
 #pp t.find(6345)
