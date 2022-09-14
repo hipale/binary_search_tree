@@ -95,13 +95,17 @@ class Tree
     if node.nil?
       return
     elsif node.right == nil && node.left == nil
-    inorder_arr.push(node)
+    inorder_arr.push(node.data)
+    return
     else
       if node.left != nil
-        inorder(node.left)
+        inorder(node.left, inorder_arr)
       end
+      
+        inorder_arr.push(node.data)
+      
       if node.right != nil
-        inorder(node.right)
+        inorder(node.right, inorder_arr)
       end
     end
     return inorder_arr
@@ -152,10 +156,13 @@ class Tree
  end 
 
   def rebalance(node = @root)
-    if is_balance(node)
+    if is_balanced?(node)
       return
     else 
-
+      inorder_arr = inorder()
+      tree = Tree.new(inorder_arr)
+      puts tree.pretty_print
+    end
   end
 end
 
@@ -173,9 +180,10 @@ t = Tree.new(array)
 
 puts t.pretty_print
 #puts t.level_order_recursion
-puts t.inorder
+#puts t.inorder
 #puts t.height(1)
 
 #pp t.find(9)
 #puts t.depth(4)
 #puts t.is_balanced?
+puts t.rebalance
