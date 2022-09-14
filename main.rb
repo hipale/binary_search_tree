@@ -90,20 +90,34 @@ class Tree
     queue.shift
     level_order_recursion(queue[0], queue)
   end
+   
+  def inorder(node = @root, inorder_arr = [])
+    if node.nil?
+      return
+    elsif node.right == nil && node.left == nil
+    inorder_arr.push(node)
+    else
+      if node.left != nil
+        inorder(node.left)
+      end
+      if node.right != nil
+        inorder(node.right)
+      end
+    end
+    return inorder_arr
+  end
 
   def height(value, node = find(value))
     if node.nil?
-      -1
+      return 0
     else
-        left = height(value, node.left)
-
+      left = height(value, node.left)
       right = height(value, node.right)
       if left > right
         1 + left
       else
         1 + right
       end
-
     end
   end
 
@@ -121,20 +135,28 @@ class Tree
   end
 
   def is_balanced?(node = @root)
-    if node == nil
-      return 
-    elsif  node.right == nil || node.left == nil                                          
-      if height(node.data) == 2
-        puts "As"
-        return false
-      end
-    else
-      is_balanced?(node.left)
-      is_balanced?(node.right)
+    if node.nil?
+      return true
     end
-    return true
+    node.left == nil ? left_height = 0 : left_height = height(node.left.data)
+    node.right == nil ? right_height = 0 : right_height = height(node.right.data)
+    if (
+    (left_height - right_height) < 2 &&
+    (left_height - right_height) > -2 &&
+    is_balanced?(node.left) &&
+    is_balanced?(node.right)
+    )
+      return true
+    end
+    return false
  end 
 
+  def rebalance(node = @root)
+    if is_balance(node)
+      return
+    else 
+
+  end
 end
 
 
@@ -144,15 +166,16 @@ array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 t = Tree.new(array)
 
 #puts t.pretty_print
- #t.insert(9999)
+ t.insert(9999)
  #t.insert(555)
  #t.insert(8)
- t.insert(2)
+ #t.insert(2)
 
 puts t.pretty_print
 #puts t.level_order_recursion
+puts t.inorder
 #puts t.height(1)
 
 #pp t.find(9)
 #puts t.depth(4)
-puts t.is_balanced?
+#puts t.is_balanced?
