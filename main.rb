@@ -47,13 +47,15 @@ class Tree
 
 
   def find(value, node = @root)
-    if node == nil
-      return false
+    if node.nil?
+      nil
+    elsif node.data == value
+      node
+    elsif node.data > value
+      find(value, node.left)
+    elsif node.data < value
+      find(value, node.right)
     end
-    if value == node.data
-      return node
-    end
-    value < node.data ? find(value, node.left) : find(value, node.right)
   end
 
   def level_order_iteration(node = @root)
@@ -89,36 +91,50 @@ class Tree
     level_order_recursion(queue[0], queue)
   end
 
-  def height(value, count = 0, node = @root)
-    if node == nil
-      return 
-    end
-    if node.data == value
-      return count
-      count = 0
-    end
-    if node.left != nil
-      height(value, count + 1, node.left)
-    end
-    if node.right != nil
-     height(value, count + 1, node.right)
+  def height(value, node = find(value))
+    if node.nil?
+      -1
+    else
+        left = height(value, node.left)
+
+      right = height(value, node.right)
+      if left > right
+        1 + left
+      else
+        1 + right
+      end
+
     end
   end
 
   def depth(value, count = 0, node = @root)
-    if node == nil
-      return 
-    end
-    if node.data == value
-      return count
+    if node.data == value 
+      puts count
+      return
     end
     if node.left != nil
-      height(value, count + 1, node.left)
+      depth(value, count + 1, node.left)
     end
     if node.right != nil
-     height(value, count + 1, node.right)
+     depth(value, count + 1, node.right)
     end
   end
+
+  def is_balanced?(node = @root)
+    if node == nil
+      return 
+    elsif  node.right == nil || node.left == nil                                          
+      if height(node.data) == 2
+        puts "As"
+        return false
+      end
+    else
+      is_balanced?(node.left)
+      is_balanced?(node.right)
+    end
+    return true
+ end 
+
 end
 
 
@@ -135,5 +151,8 @@ t = Tree.new(array)
 
 puts t.pretty_print
 #puts t.level_order_recursion
-puts t.height(67)
-#pp t.find(6345)
+#puts t.height(1)
+
+#pp t.find(9)
+#puts t.depth(4)
+puts t.is_balanced?
