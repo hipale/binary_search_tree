@@ -94,21 +94,46 @@ class Tree
   def inorder(node = @root, inorder_arr = [])
     if node.nil?
       return
-    elsif node.right == nil && node.left == nil
-    inorder_arr.push(node.data)
-    return
     else
       if node.left != nil
         inorder(node.left, inorder_arr)
       end
-      
-        inorder_arr.push(node.data)
-      
+      inorder_arr.push(node.data)
       if node.right != nil
         inorder(node.right, inorder_arr)
       end
     end
     return inorder_arr
+  end
+
+  def preorder(node = @root, preorder_arr = [])
+    if node.nil?
+      return
+    else
+      preorder_arr.push(node.data)
+      if node.left != nil
+        preorder(node.left, preorder_arr)
+      end
+      if node.right != nil
+        preorder(node.right, preorder_arr)
+      end
+    end
+    return preorder_arr
+  end
+
+  def postorder(node = @root, postorder_arr = [])
+    if node.nil?
+      return
+    else
+      if node.left != nil
+        postorder(node.left, postorder_arr)
+      end
+      if node.right != nil
+        postorder(node.right, postorder_arr)
+      end
+      postorder_arr.push(node.data)
+    end
+    return postorder_arr
   end
 
   def height(value, node = find(value))
@@ -127,7 +152,6 @@ class Tree
 
   def depth(value, count = 0, node = @root)
     if node.data == value 
-      puts count
       return
     end
     if node.left != nil
@@ -181,9 +205,11 @@ t = Tree.new(array)
 puts t.pretty_print
 #puts t.level_order_recursion
 #puts t.inorder
+#puts t.preorder
+#puts t.postorder
 #puts t.height(1)
 
 #pp t.find(9)
 #puts t.depth(4)
 #puts t.is_balanced?
-puts t.rebalance
+#puts t.rebalance
