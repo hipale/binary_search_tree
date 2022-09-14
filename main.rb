@@ -5,7 +5,6 @@ class Node
   end
 end
 
-
 class Tree
   attr_accessor :root
   def initialize(array)
@@ -187,18 +186,36 @@ class Tree
       puts tree.pretty_print
     end
   end
+
+  def min_value(node = @root)
+    if node.nil?
+      return true
+    else 
+      min_arr = inorder()
+      return find(min_arr.min)
+    end
+  end
+
+  def max_value(node = @root)
+    if node.nil?
+      return true
+    else 
+      max_arr = inorder()
+      return find(max_arr.max)
+    end
+  end
 end
 
 
 
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-t = Tree.new(array)
+t = Tree.new((Array.new(15) { rand(1..100) }))
 
 #puts t.pretty_print
- #t.insert(9999)
- #t.insert(555)
- #t.insert(8)
+ t.insert(9999)
+ t.insert(555)
+ t.insert(-2)
  #t.insert(2)
 
 puts t.pretty_print
@@ -209,5 +226,6 @@ puts t.pretty_print
 #puts t.height(9)
 #puts t.depth(5)
 #pp t.find(9)
-#puts t.is_balanced?
-#puts t.rebalance
+puts t.is_balanced?
+puts t.rebalance
+#puts t.min_value
