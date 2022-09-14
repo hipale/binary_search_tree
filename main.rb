@@ -138,7 +138,7 @@ class Tree
 
   def height(value, node = find(value))
     if node.nil?
-      return 0
+      return -1
     else
       left = height(value, node.left)
       right = height(value, node.right)
@@ -150,16 +150,15 @@ class Tree
     end
   end
 
-  def depth(value, count = 0, node = @root)
-    if node.data == value 
+  def depth(value, count = 0, node = @root, score = [])
+    if node.nil?
       return
+    elsif node.data == value
+      score.push(count)
     end
-    if node.left != nil
-      depth(value, count + 1, node.left)
-    end
-    if node.right != nil
-     depth(value, count + 1, node.right)
-    end
+      depth(value, count + 1, node.left, score)
+      depth(value, count + 1, node.right, score)
+      return score
   end
 
   def is_balanced?(node = @root)
@@ -197,7 +196,7 @@ array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 t = Tree.new(array)
 
 #puts t.pretty_print
- t.insert(9999)
+ #t.insert(9999)
  #t.insert(555)
  #t.insert(8)
  #t.insert(2)
@@ -207,9 +206,8 @@ puts t.pretty_print
 #puts t.inorder
 #puts t.preorder
 #puts t.postorder
-#puts t.height(1)
-
+#puts t.height(9)
+#puts t.depth(5)
 #pp t.find(9)
-#puts t.depth(4)
 #puts t.is_balanced?
 #puts t.rebalance
