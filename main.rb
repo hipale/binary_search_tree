@@ -43,8 +43,37 @@ class Tree
       insert(value, node.right)
     end
   end
+#/////////////#
 
+  def delete(value, node = find(value))
+    if node.nil?
+      return
+    elsif node.right != nil && node.left != nil
+      current = node.right
+      until current.left == nil
+        current = current.left
+      end
+      node.data = current.data
+      if current.right != nil
+        current.data = current.right.data
+        current.right = nil
+      end
+    elsif node.right == nil && node.left == nil
+      node = nil
+    else
+      if node.right != nil
+        node.data = node.right.data
+        node.right.right != nil ? node.right = node.right.right : node.right = nil
+        node.right.left != nil ? node.left = node.right.left : node.left = nil
+      elsif node.left != nil 
+        node.data = node.left.data
+        node.left.right != nil ? node.left = node.left.right : node.right = nil
+        node.left.left != nil ? node.left = node.left.left : node.left = nil
+      end
+    end
+  end
 
+  #///////////#
   def find(value, node = @root)
     if node.nil?
       nil
@@ -210,14 +239,14 @@ end
 
 
 array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-t = Tree.new((Array.new(15) { rand(1..100) }))
+t = Tree.new(array)
 
-#puts t.pretty_print
+puts t.pretty_print
  t.insert(9999)
- t.insert(555)
- t.insert(-2)
+ #t.insert(555)
+ #t.insert(-2)
  #t.insert(2)
-
+t.delete(9)
 puts t.pretty_print
 #puts t.level_order_recursion
 #puts t.inorder
@@ -226,6 +255,6 @@ puts t.pretty_print
 #puts t.height(9)
 #puts t.depth(5)
 #pp t.find(9)
-puts t.is_balanced?
-puts t.rebalance
+#puts t.is_balanced?
+#puts t.rebalance
 #puts t.min_value
