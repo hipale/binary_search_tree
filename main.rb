@@ -59,12 +59,24 @@ class Tree
         current.right = nil
       end
     elsif node.right == nil && node.left == nil
-      node = nil
+      arr = inorder
+      x = 0
+      until x == arr.length - 1
+         if height(arr[x]) == height(node.data) + 1
+          previous_node = find(arr[x])
+          if previous_node.right == node
+            return previous_node.right = nil
+          elsif previous_node.left == node
+            return previous_node.left = nil
+          end
+        end
+        x += 1
+     end
     else
       if node.right != nil
         node.data = node.right.data
-        node.right.right != nil ? node.right = node.right.right : node.right = nil
         node.right.left != nil ? node.left = node.right.left : node.left = nil
+        node.right.right != nil ? node.right = node.right.right : node.right = nil
       elsif node.left != nil 
         node.data = node.left.data
         node.left.right != nil ? node.left = node.left.right : node.right = nil
@@ -242,7 +254,7 @@ array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 t = Tree.new(array)
 
 puts t.pretty_print
- t.insert(9999)
+ #t.insert(9999)
  #t.insert(555)
  #t.insert(-2)
  #t.insert(2)
