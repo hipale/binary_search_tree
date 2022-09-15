@@ -25,12 +25,6 @@ class Tree
     return root
   end
 
-  def pretty_print(node = @root, prefix = '', is_left = true)
-    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
-    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
-    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
-  end
-
   def insert(value, node = @root)
     if node.right == nil && value > node.data
       return node.right = Node.new(value)
@@ -43,7 +37,6 @@ class Tree
       insert(value, node.right)
     end
   end
-#/////////////#
 
   def delete(value, node = find(value))
     if node.nil?
@@ -85,7 +78,6 @@ class Tree
     end
   end
 
-  #///////////#
   def find(value, node = @root)
     if node.nil?
       nil
@@ -245,6 +237,13 @@ class Tree
       return find(max_arr.max)
     end
   end
+
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
+  
 end
 
 
